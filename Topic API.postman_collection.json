@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "1aec981b-d601-41c0-b182-88679daed1ac",
+		"name": "Topic API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25804567"
+	},
+	"item": [
+		{
+			"name": "create a root topic",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Music\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/topics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"topics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create a sub-topic",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"Music Theory\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/topics/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"topics",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "move a topic to a new parent",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"parent_id\": 1\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/topics/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"topics",
+						"3"
+					]
+				},
+				"description": "### Testing Guide\n\nThis request is made to demonstrate how to update a topic. The default example moves a topic to a new parent.\n\nYou can test other update scenarios by modifying the body of the request and the id in the url.\n\n#### **Case 1: Rename the Topic**\n\nTo test renaming a topic **without changing its position** in the hierarchy:\n\n- Modify the body to send only the `name` field.\n    \n\n``` json\n{\n    \"name\": \"New Topic Name\"\n}\n\n```\n\n#### **Case 2: Make the Topic a Root Topic**\n\nTo test **moving a topic to the root level**:\n\n- Modify the body to set the `parent_id` to `null`.\n    \n\n``` json\n{\n    \"parent_id\": null\n}\n\n```\n\n#### **Case 3: Test Invalid Move Validation**\n\nTo test the safety check that prevents a topic from being moved under its own child:\n\n- Change the ID in the URL to a parent topic (for example `/api/topics/1`).\n- In the body, set the `parent_id` to one of its known descendants. for example:\n    \n\n``` json\n{\n     \"parent_id\": 3 \n}\n\n```"
+			},
+			"response": []
+		}
+	]
+}
